@@ -1,0 +1,36 @@
+
+python train.py task=Ant checkpoint=runs/Ant/nn/Ant.pth test=True num_envs=64
+
+
+task=FrankaCubeStack
+
+python train.py task=FrankaCubeStack headless=False test=True num_envs=4
+
+
+python train.py task=UR5CubeStack headless=False test=True num_envs=64 checkpoint=runs/UR5CubeStack_ok_03-19-47-37/nn/last_UR5CubeStack_ep_100_rew_151.2396.pth
+
+
+
+
+python train.py task=INOPickPlace headless=False test=True num_envs=4
+
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python Debugger: Current File with Arguments",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "isaacgymenvs/train.py",
+            "console": "integratedTerminal",
+            "args": [
+                "task=INOPickPlace",
+                "headless=False",
+                "test=True",
+                "num_envs=1"
+            ]
+        }
+    ]
+}
+
+
