@@ -144,7 +144,7 @@ class InoPickPlace(VecTask):
 
         # ino defaults
         self.ino_default_dof_pos = to_torch(
-            [66.762*np.pi/180.0, -88.849*np.pi/180.0, -449.187, 22.097*np.pi/180.0, 0, 0, 0.01, 0.01], device=self.device
+            [66.762*np.pi/180.0, -88.849*np.pi/180.0, 0, 22.097*np.pi/180.0, 0, 0, 0.01, 0.01], device=self.device
         )
 
          # OSC Gains
