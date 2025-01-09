@@ -184,10 +184,12 @@ class InoPickPlace(VecTask):
 
         asset_root = os.path.join(os.path.dirname(os.path.abspath(__file__)), "../../assets")
         ino_asset_file = "urdf/ino_ir_400_4/urdf/ino_ir_400_4.urdf"
+        stickers_asset_file = "urdf/stickers/urdf/stickers.urdf"
 
         if "asset" in self.cfg["env"]:
             asset_root = os.path.join(os.path.dirname(os.path.abspath(__file__)), self.cfg["env"]["asset"].get("assetRoot", asset_root))
             ino_asset_file = self.cfg["env"]["asset"].get("assetFileNameino", ino_asset_file)
+            stickers_asset_file = self.cfg["env"]["asset"].get("assetFileNamestickers", stickers_asset_file)
 
         # load ino asset
         asset_options = gymapi.AssetOptions()
@@ -197,7 +199,7 @@ class InoPickPlace(VecTask):
         asset_options.disable_gravity = True
         #asset_options.convex_decomposition_from_submeshes = True
         asset_options.thickness = 0.001
-        asset_options.default_dof_drive_mode = gymapi.DOF_MODE_EFFORT
+        asset_options.default_dof_drive_mode = gymapi.DOF_MODE_EFFORT  
         
         # uesd .obj
         asset_options.use_mesh_materials = True  
@@ -209,36 +211,20 @@ class InoPickPlace(VecTask):
         asset_options.vhacd_params.resolution = 200000 
 
         ino_asset = self.gym.load_asset(self.sim, asset_root, ino_asset_file, asset_options)
+        
 
-        ino_dof_stiffness = to_torch([0, 0, 0, 0, 0, 0, 5000., 5000.], dtype=torch.float, device=self.device)
-        ino_dof_damping = to_torch([0, 0, 0, 0,0, 0, 1.0e2, 1.0e2], dtype=torch.float, device=self.device)
+        # load stickers asset
+        asset_options.flip_visual_attachments = False
+        asset_options.collapse_fixed_joints = True
+        asset_options.disable_gravity = False
+        asset_options.default_dof_drive_mode = gymapi.DOF_MODE_NONE
+        asset_options.armature = 0.005
+        stickers_asset = self.gym.load_asset(self.sim, asset_root, stickers_asset_file, asset_options)
 
-        # Create table asset
-        table_pos = [0.0, 0.0, 0.95]
-        table_thickness = 0.05
-        table_opts = gymapi.AssetOptions()
-        table_opts.fix_base_link = True
-        table_asset = self.gym.create_box(self.sim, *[1.2, 1.2, table_thickness], table_opts)
 
-        # Create table stand asset
-        table_stand_height = 0.1
-        table_stand_pos = [-0.5, 0.0, 1.0 + table_thickness / 2 + table_stand_height / 2]
-        table_stand_opts = gymapi.AssetOptions()
-        table_stand_opts.fix_base_link = True
-        table_stand_asset = self.gym.create_box(self.sim, *[0.2, 0.2, table_stand_height], table_opts)
+        ino_dof_stiffness = to_torch([400, 400, 400, 400, 400, 400, 5000., 5000.], dtype=torch.float, device=self.device)
+        ino_dof_damping = to_torch([80, 80, 80, 80,80, 80, 1.0e2, 1.0e2], dtype=torch.float, device=self.device)
 
-        self.cubeA_size = 0.040 #0.05
-        self.cubeB_size = 0.070
-
-        # Create cubeA asset
-        cubeA_opts = gymapi.AssetOptions()
-        cubeA_asset = self.gym.create_box(self.sim, *([self.cubeA_size] * 3), cubeA_opts)
-        cubeA_color = gymapi.Vec3(0.6, 0.1, 0.0)#Red
-
-        # Create cubeB asset
-        cubeB_opts = gymapi.AssetOptions()
-        cubeB_asset = self.gym.create_box(self.sim, *([self.cubeB_size] * 3), cubeB_opts)
-        cubeB_color = gymapi.Vec3(0.0, 0.4, 0.1)#Green
 
         self.num_ino_bodies = self.gym.get_asset_rigid_body_count(ino_asset)
         self.num_ino_dofs = self.gym.get_asset_dof_count(ino_asset) #8
