@@ -27,12 +27,21 @@ env:
   alignRewardScale: 2.0
   stackRewardScale: 16.0
 
+  numProps: 1
+
+  dofVelocityScale: 1.0
+
+  rotRewardScale: 1.0
+  graspRewardScale: 1.0
+  actionPenaltyScale: 0.01
+
+
   controlType: joint_tor  # options are {joint_tor, osc}
 
   asset:
     assetRoot: "../../assets"
-    assetFileNameino: "urdf/ino_ir_400_4/urdf/ino_ir_400_4.urdf"
-
+    assetFileNameRobot: "urdf/ino_ir_400_4/urdf/ino_ir_400_4.urdf"
+    assetFileNameStickers: "urdf/stickers/urdf/stickers.urdf"
   # set to True if you use camera sensors in the environment
   enableCameraSensors: False
 

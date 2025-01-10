@@ -71,7 +71,7 @@
       </geometry>
     </collision>
   </link>
-  <joint name="joint1" type="continuous">
+  <joint name="joint1" type="revolute">
     <origin xyz="0 0 0" rpy="0 0 0" />
     <parent
       link="baselink" />
@@ -114,7 +114,7 @@
       </geometry>
     </collision>
   </link>
-  <joint name="joint2" type="continuous">
+  <joint name="joint2" type="revolute">
     <origin xyz="0.225 0 0.0614" rpy="0 0 0" />
     <parent
       link="link1" />
@@ -222,6 +222,24 @@
     <limit lower="-1.1416" upper="1.1416" effort="10" velocity="45.379" />
   </joint>
   <link name="link5">
+    <inertial>
+      <origin
+        xyz="0.000269193867090345 -3.65915253696762E-05 0.0275835344641969"
+        rpy="0 0 0" />
+      <mass
+        value="0.00843880884560637" />
+      <inertia
+        ixx="1.48872682222414E-06"
+        ixy="-2.6264753474242E-09"
+        ixz="-2.506635428181E-08"
+        iyy="1.45655449640398E-06"
+        iyz="2.29160751505996E-09"
+        izz="8.05120659155988E-07" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
       <geometry>
         <mesh
           filename="package://ino_ir_400_4/meshes/mylink.dae" />
@@ -233,6 +251,9 @@
       </material>
     </visual>
     <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
       <geometry>
         <mesh
           filename="package://ino_ir_400_4/meshes/mylink.obj" />
@@ -240,18 +261,31 @@
     </collision>
   </link>
   <joint name="joint5" type="revolute">
-    <origin
-      xyz="0 0 0"
-      rpy="0 0 0" />
-    <parent
-      link="link4" />
-    <child
-      link="link5" />
-    <axis
-      xyz="0 0 1" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <parent link="link4" />
+    <child link="link5" />
+    <axis xyz="0 0 1" />
     <limit lower="0" upper="0" effort="1" velocity="1" />
   </joint>
   <link name="link6">
+        <inertial>
+      <origin
+        xyz="0.000269193867090345 -3.65915253696762E-05 0.0275835344641969"
+        rpy="0 0 0" />
+      <mass
+        value="0.00843880884560637" />
+      <inertia
+        ixx="1.48872682222414E-06"
+        ixy="-2.6264753474242E-09"
+        ixz="-2.506635428181E-08"
+        iyy="1.45655449640398E-06"
+        iyz="2.29160751505996E-09"
+        izz="8.05120659155988E-07" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
       <geometry>
         <mesh
           filename="package://ino_ir_400_4/meshes/mylink.dae" />
@@ -263,6 +297,9 @@
       </material>
     </visual>
     <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
       <geometry>
         <mesh
           filename="package://ino_ir_400_4/meshes/mylink.obj" />

@@ -496,7 +496,7 @@ class UR5CubeStack(VecTask):
         self._effort_control[env_ids, :] = torch.zeros_like(pos)
 
         # Deploy updates
-        multi_env_ids_int32 = self._global_indices[env_ids, 0].flatten()
+        multi_env_ids_int32 = self._global_indices[D, 0].flatten()
         self.gym.set_dof_position_target_tensor_indexed(self.sim,
                                                         gymtorch.unwrap_tensor(self._pos_control),
                                                         gymtorch.unwrap_tensor(multi_env_ids_int32),

@@ -34,3 +34,57 @@ python train.py task=INOPickPlace headless=False test=True num_envs=4
 }
 
 
+robot_asset_file = "urdf/ino_ir_400_4/urdf/ino_ir_400_4.urdf"
+stickers_asset_file = "urdf/stickers/urdf/stickers.urdf"
+
+
+请参照isaacgymenv环境中的任务 Franka_cabinet.py（7轴机械臂拉抽屉）  ur5_cube_stack.py(6轴机械臂堆叠立方块)等任务，以及使用到的api.
+需要实现目标6轴机械臂（ino_ir_400_4）通过强化学习方式，ppo.完成以下任务：
+1.机械臂从固定原点a出发，前往抓取点b.
+2.机械臂末端与目标物体stickers_suck重合，并模拟吸嘴吸附。
+3.机械臂带着目标物体前往定点c
+4.机械壁带着目标物体前往放置点D.
+5.机械臂释放物体，并且回原点。
+
+状态空间：机械臂 关节q(6),机械臂末端位姿(7,xyz,wxyz)， 目标物体位姿(7,xyz,wxyz)
+动作空间：机械臂 关节位置(6), 末端吸盘开合(1)
+
+使用类似ur5_cube_stack.py，ranka_cabinet.py 的ppo.
+需要设计reset, reward fun 
+类名：InoPickPlace
+
+需要有：
+create_sim()
+init_data()
+compute_reward()
+compute_observations()
+reset_idx()
+pre_physics_step()
+post_physics_step()
+
+请给出完整的代码
+
+
+robot_asset_file = "urdf/ino_ir_400_4/urdf/ino_ir_400_4_suck.urdf"
+stickers_asset_file = "urdf/stickers/urdf/stickers_suck.urdf"
+Please refer to tasks such as Franka_cabinet. py (7-axis robotic arm pulling drawer) and ur5_cube_stack. py (6-axis robotic arm stacking cube) in the isaacgyrenv environment, as well as the APIs used
+To achieve the goal of 6-axis robotic arm (ino_ir_400_4), ppo needs to use reinforcement learning to complete the following tasks:
+1. The robotic arm starts from the fixed origin a and travels to the grasping point b
+2. Align the end of the robotic arm with the target object stickers_suck and simulate suction nozzle suction.
+3. The robotic arm carries the target object to the designated point c
+4. The mechanical wall carries the target object to the placement point D
+5. The robotic arm releases the object and returns to the origin.
+State space: robotic arm joint q (6), robotic arm end pose (7, xyz, wxyz), Target object pose (7, xyz, wxyz)
+Action space: Joint position of robotic arm (6), opening and closing of end suction cup (1)
+Use ppo similar to ur5_cube_stack.by, ranka_cablet.py
+We need to design a reset, reward fun 
+Class name: InoPickPlace
+Need to have:
+create_sim()
+init_data()
+compute_reward()
+compute_observations()
+reset_idx()
+pre_physics_step()
+post_physics_step()
+Please provide the complete code
